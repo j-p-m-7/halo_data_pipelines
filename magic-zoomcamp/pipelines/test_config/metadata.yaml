@@ -33,7 +33,8 @@ run_pipeline_in_one_process: false
 settings:
   triggers: null
 spark_config: {}
-tags: []
+tags:
+- test_config
 type: python
 uuid: test_config
 variables_dir: /home/src/mage_data/magic-zoomcamp

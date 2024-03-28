@@ -9,6 +9,10 @@ def transform(data, *args, **kwargs):
     # Because some rides have zero passengers, need to remove this
     print("---------Preprocessing----------")
     print("Rows with zero passengers:", data['passenger_count'].isin([0]).sum())
+    print()
+    print("---------Postprocessing----------")
+    print("Rows with at least 1 passenger:", (~data['passenger_count'].isin([0])).sum())
+
 
     return data[data['passenger_count'] > 0]
 

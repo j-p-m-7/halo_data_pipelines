@@ -37,7 +37,13 @@ def load_data_from_api(*args, **kwargs):
 
     parse_dates = ['tpep_pickup_datetime', 'tpep_dropoff_datetime']
 
-    return pd.read_csv(url, sep=",", compression="gzip",dtype=taxi_dtypes,parse_dates=parse_dates)
+    df = pd.read_csv(url, sep=",", compression="gzip",dtype=taxi_dtypes,parse_dates=parse_dates) #.head(1)
+
+    #df['tpep_pickup_date'] = df['tpep_pickup_datetime'].dt.date
+
+    return df
+    
+    #return pd.read_csv(url, sep=",", compression="gzip",dtype=taxi_dtypes,parse_dates=parse_dates).head(1)
 
 
 @test
@@ -46,3 +52,4 @@ def test_output(output, *args) -> None:
     Template code for testing the output of the block.
     """
     assert output is not None, 'The output is undefined'
+

@@ -80,7 +80,7 @@ executor_config: {}
 executor_count: 1
 executor_type: null
 extensions: {}
-name: eclipsing charm
+name: load_to_gcs
 notification_config: {}
 remote_variables_dir: null
 retry_config: {}
@@ -88,8 +88,9 @@ run_pipeline_in_one_process: false
 settings:
   triggers: null
 spark_config: {}
-tags: []
+tags:
+- etl
 type: python
-uuid: eclipsing_charm
+uuid: load_to_gcs
 variables_dir: /home/src/mage_data/magic-zoomcamp
 widgets: []
