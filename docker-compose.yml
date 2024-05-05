@@ -21,6 +21,7 @@ services:
     volumes:
       # . will go to home/src into mage container
       - .:/home/src/
+      - /Users/jackmonger/VSCODE/data_engineering_class/course_repo/data-engineering-zoomcamp/04-analytics-engineering/dbt_jpm/:/home/src/
     restart: on-failure:5
   postgres:
     image: postgres:14
