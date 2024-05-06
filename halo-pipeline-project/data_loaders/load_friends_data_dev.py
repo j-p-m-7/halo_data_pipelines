@@ -188,7 +188,7 @@ def load_data_from_api(*args, **kwargs):
     # Getting ddf of friends and list of friends ids
     friends_df = get_friends_profiles(authorization_header)
 
-    return friends_df#, list_of_friends_ids
+    return friends_df
     
 
 
@@ -200,6 +200,8 @@ def test_output(output, *args) -> None:
     """
     assert output is not None, 'The output is undefined'
     assert (output['xuid'] == output['hostId']).all(), "xuid and hostID are not the same"
+    assert (output['RealName'] == output['RealNameOverride']).all(), "xuid and hostID are not the same"
+
     #assert (output['IsQuarantined'] == 0).all(), "Not all values in IsQuarantined are equal to 0"
 
 
