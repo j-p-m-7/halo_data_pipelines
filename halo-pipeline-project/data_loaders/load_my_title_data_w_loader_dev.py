@@ -118,15 +118,15 @@ def load_data(friends_df, *args, **kwargs):
     # Loop through values
     for index, xuid in enumerate(list_of_friends_ids):
         # Calculate progress percentage
-        progress = (index / total_friends) * 100
+        #progress = (index / total_friends) * 100
         
         # Check if progress is at 25%, 50%, 75%, and 100%
-        if 24.5 < progress < 25.5:
-            print("25% done iterating through friends list")
-        elif 49.5 < progress < 51.0:
-            print("50% done iterating through friends list")
-        elif 74.5 < progress < 75.5:
-            print("75% done iterating through friends list")
+        # if 24.5 < progress < 25.5:
+        #     print("25% done")
+        # elif 49.5 < progress < 51.0:
+        #     print("50% done")
+        # elif 74.5 < progress < 75.5:
+        #     print("75% done")
             
 
         # Only returns value if friend plays Halo Infinite
@@ -150,9 +150,9 @@ def load_data(friends_df, *args, **kwargs):
             # Appends info from JSON to DataFrame (This DF contains all friends who play Halo Infinite)
             halo_friends_df = halo_friends_df._append(df, ignore_index=True)
             
-    print("100% done iterating through friends list")
+    #print("100% done")
 
-    print("Friends who play Halo Infinite:",len(halo_friends_df))
+    #print("Friends who play Halo Infinite:",len(halo_friends_df))
 
     return halo_friends_df
 

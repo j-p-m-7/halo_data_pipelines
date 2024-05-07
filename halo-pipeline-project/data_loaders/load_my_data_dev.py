@@ -102,7 +102,12 @@ def get_friends_profiles(authorization_header, *args, **kwargs):
 
     # Set up request URL
     moniker = "People"  # The only accepted moniker is "People"
-    url = f"https://profile.xboxlive.com/users/me/profile/settings/people/{moniker}?settings={fields}"
+
+    ### WORKING
+    #url = f"https://profile.xboxlive.com/users/me/profile/settings/"
+    ### WORKING 
+    url = f"https://profile.xboxlive.com/users/me/profile/settings?settings={fields}"
+    'people/{moniker}?settings={fields}'
 
     # Set up request headers
     headers = {
@@ -118,6 +123,7 @@ def get_friends_profiles(authorization_header, *args, **kwargs):
     response = requests.get(url, 
                             #params=params,
                             headers=headers)
+    #print(response.text)                       
 
     # Check response status code
     if response.status_code == 200:
@@ -181,9 +187,9 @@ def load_data_from_api(*args, **kwargs):
     authorization_header = get_xbl_token()
 
     # Sets global variables to be used downstream
-    set_global_variable('load_friends_info', key='authorization_header', value=authorization_header)
-    set_global_variable('load_friends_info', key='accept_language_header', value='en-US')
-    set_global_variable('load_friends_info', key='accept_header', value='application/json')
+    set_global_variable('load_my_info', key='authorization_header', value=authorization_header)
+    set_global_variable('load_my_info', key='accept_language_header', value='en-US')
+    set_global_variable('load_my_info', key='accept_header', value='application/json')
 
     # Getting ddf of friends and list of friends ids
     friends_df = get_friends_profiles(authorization_header)

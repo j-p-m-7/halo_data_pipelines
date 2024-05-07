@@ -3,9 +3,11 @@ from mage_ai.io.config import ConfigFileLoader
 from mage_ai.io.postgres import Postgres
 from pandas import DataFrame
 from os import path
+from mage_ai.io.constants import UNIQUE_CONFLICT_METHOD_UPDATE
 
 if 'data_exporter' not in globals():
     from mage_ai.data_preparation.decorators import data_exporter
+
 
 
 @data_exporter
@@ -27,5 +29,8 @@ def export_data_to_postgres(df: DataFrame, **kwargs) -> None:
             schema_name,
             table_name,
             index=False,  # Specifies whether to include index in exported table
-            if_exists='replace',  # Specify resolution policy if table name already exists
+            if_exists='append',  # Specify resolution policy if table name already exists
+            unique_conflict_method='UPDATE',
+            unique_constraints=['player_id']
         )
+        
