@@ -186,22 +186,5 @@ node_js_scripts/node_modules/
 node_js_scripts/package-lock.json
 node_js_scripts/package.json
 
-#IGNORE
-MageNotes.md
-Screenshot 2024-03-26 at 4.58.01 PM.png
-Screenshot 2024-03-26 at 4.58.58 PM.png
-dev.env
-gpt_text.md
-image-1.png
-image.png
-magic-zoomcamp/data_exporters/taxi_data_to_postgres.py
-magic-zoomcamp/data_loaders/load_api_data.py
-magic-zoomcamp/data_loaders/load_taxi_data.sql
-magic-zoomcamp/data_loaders/test.sql
-magic-zoomcamp/io_config.yaml
-magic-zoomcamp/pipelines/api_to_postgres/metadata.yaml
-magic-zoomcamp/pipelines/test_postgres_conn/metadata.yaml
-magic-zoomcamp/transformers/transform_taxi_data.py
-titanic_clean.csv
-video_transcript_notes.md
+# Other
 README_mage.md
