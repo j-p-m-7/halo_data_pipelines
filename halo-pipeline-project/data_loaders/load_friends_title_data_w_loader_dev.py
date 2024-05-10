@@ -18,17 +18,8 @@ if 'test' not in globals():
 
 
 
-# def titles_json_to_df(parsed_json):
-    
-    
-#     return df
-
-
 
 def get_titles_test(xuid, authorization_header, accept_language_header, accept_header):
-
-    # accept_language_header = 'accept_language_header'
-    # accept_header = 'accept_header'
 
     TITLEHUB_URL = "https://titlehub.xboxlive.com"
                   
@@ -55,7 +46,6 @@ def get_titles_test(xuid, authorization_header, accept_language_header, accept_h
                         headers=headers)
 
     data = resp.json()
-    #print("Player", xuid, "has played a total of", len(data['titles']), "title(s)")
 
     # Check if name == "Halo Infinite"
     at_least_one_halo_infinite = any(title["name"] == "Halo Infinite" for title in data["titles"])
@@ -79,14 +69,17 @@ def get_titles_test(xuid, authorization_header, accept_language_header, accept_h
                 for title in filtered_titles
             ]
         }
+
         if parsed_data:
             # Convert back to JSON
             parsed_json = json.dumps(parsed_data, indent=2)
             
             # Returns JSON and total_titles_played
             return json.loads(parsed_json), len(data['titles'])
+        
         else:
             return {}, 0  # Return empty JSON and 0 titles played if no Halo Infinite played
+        
     else:
         return {}, 0  # Return empty JSON and 0 titles played if no Halo Infinite played
 
@@ -104,13 +97,12 @@ def load_data(friends_df, *args, **kwargs):
 
     # Initialize df for friends who play Halo Infinite
     halo_friends_df = pd.DataFrame()  
-
     list_of_friends_ids = friends_df['xuid'].tolist()
 
+    # Get Request Headers from kwargs
     authorization_header = kwargs.get('authorization_header')
     accept_language_header = kwargs.get('accept_language_header')
     accept_header = kwargs.get('accept_header')
-
 
     # Total number of values
     total_friends = len(list_of_friends_ids)

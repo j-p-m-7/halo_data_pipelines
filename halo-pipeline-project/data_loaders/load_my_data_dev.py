@@ -22,9 +22,6 @@ if 'data_loader' not in globals():
 if 'test' not in globals():
     from mage_ai.data_preparation.decorators import test
 
-# xuid = '2533274848622227' 
-# titleId = '2043073184'
-
 
 
 def get_xbl_token():
@@ -33,26 +30,17 @@ def get_xbl_token():
                             stdout=subprocess.PIPE)
 
     data_string = json_data_as_bytes.stdout.read()
-    #print(data_string)
-
     cleaned_data_as_string = data_string.decode("utf-8").strip().replace("'", '"')
-    #print(cleaned_data_as_string)
-
 
     # Add double quotes around keys and string values, excluding "service" and "com"
     json_string_fixed = re.sub(r'(?<!:)(\b(?!service|com)[a-zA-Z_][a-zA-Z0-9_]*\b):', r'"\1":', cleaned_data_as_string)
     json_string_fixed = re.sub(r'(?<!:)(\b(?!service|com)[a-zA-Z_][a-zA-Z0-9_]*\b)(?=:)', r'"\1"', json_string_fixed)
-
-    #print(json_string_fixed)
     json_string_fixed = json_string_fixed.replace("[Array]", "[]")
-    #print(json_string_fixed)
+
     # Parse the fixed JSON string
     data = json.loads(json_string_fixed)
-    #print(data)
-
     xbl_token = f"XBL3.0 x={data['user_hash']};{data['xsts_token']}"
 
-    #print('\n', xbl_token, '\n')
     return xbl_token
 
 
@@ -76,7 +64,6 @@ def get_friends_profiles(authorization_header, *args, **kwargs):
     fields = [
     # 'GameDisplayName',
     # 'AppDisplayName',
-
     'Gamertag',
     'Gamerscore',
     'AccountTier',
@@ -90,22 +77,16 @@ def get_friends_profiles(authorization_header, *args, **kwargs):
     'UniqueModernGamertag',
     'IsQuarantined',
     'DisplayedLinkedAccounts'
-
     # 'GameDisplayPicRaw',
     # 'PreferredColor',
     # 'Watermarks',
     ]
-
 
     # Join the fields into a single string separated by commas
     fields = ",".join(fields)
 
     # Set up request URL
     moniker = "People"  # The only accepted moniker is "People"
-
-    ### WORKING
-    #url = f"https://profile.xboxlive.com/users/me/profile/settings/"
-    ### WORKING 
     url = f"https://profile.xboxlive.com/users/me/profile/settings?settings={fields}"
     'people/{moniker}?settings={fields}'
 
@@ -122,21 +103,11 @@ def get_friends_profiles(authorization_header, *args, **kwargs):
     #Send GET request
     response = requests.get(url, 
                             #params=params,
-                            headers=headers)
-    #print(response.text)                       
+                            headers=headers)                     
 
     # Check response status code
     if response.status_code == 200:
-        # json_data = response.json()
-
-        # # List just containing xuid for each friend on my friends list
-        # friends_list = []
-        # for x in json_data['profileUsers']:
-        #     friends_list.append(x['id'])
-            
-        # print("Total friends: ", len(friends_list))
-
-        # DataFrame containing in depth data for each friend on friends list
+    
         data = json.loads(response.text)
 
         friends_df = pd.DataFrame()
@@ -149,8 +120,10 @@ def get_friends_profiles(authorization_header, *args, **kwargs):
 
             # Create second dataframe with more info in settings field
             settings = data['profileUsers'][x]['settings']
+
             # Convert settings to DataFrame
             df_2 = pd.DataFrame(settings)
+
             # Transpose the DataFrame
             df_2 = df_2.set_index('id').transpose()
 
@@ -163,14 +136,13 @@ def get_friends_profiles(authorization_header, *args, **kwargs):
 
             # Append to table containing all friends data from this for loop
             friends_df = friends_df._append(df, ignore_index=True)
-            
-            # Save for Transformer block
-            #friends_df = friends_df.drop(['DisplayedLinkedAccounts'], axis=1)
 
         friends_df = friends_df.rename(columns={'id':'xuid'})
 
         return friends_df#, friends_list
+    
     else:
+
         # Error handling
         print(f"Error: {response.status_code} - {response.reason}")
         return "Error", "Error"
@@ -196,7 +168,6 @@ def load_data_from_api(*args, **kwargs):
 
     return friends_df
     
-
 
 
 @test
