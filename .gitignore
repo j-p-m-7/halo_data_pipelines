@@ -180,7 +180,7 @@ notes/
 testing/
 halo-pipeline-project/.file_versions/
 magic-zoomcamp/
-*.yaml
+halo-pipeline-project/metadata.yaml
 
 
 # Node Js
