@@ -1,5 +1,7 @@
 # Halo Data Pipelines Project
 
+
+
 ## Project Overview
 This purpose of this project is to capture my Halo Infinite player data and export it to a PostgreSQL database. From there, I will use SQL to gain actionable insights related to:
 
@@ -100,10 +102,11 @@ Halo players can rely on platforms like Halo Waypoint for tracking their in-game
 3. **Lack of Customization**: Players have limited control over the types of metrics tracked and the level of customization available in performance tracking platforms.
 
 4. **Limited Integration with Third-Party Tools**: Integrating Halo data with third-party analytics tools or visualization libraries may be challenging due to limitations in data accessibility and format.
-
+---
 ### Proposed Solution:
 To overcome these challenges, I will build custom data pipelines to extract, transform, and load Halo data into a PostgreSQL database. This solution will enable capture of more granular metrics, real-time updates, and facilitate integration with third-party tools for advanced analytics and visualization.
 
+---
 ### Expected Outcomes:
 1. Enhanced Performance Tracking: I will have access to more detailed and up-to-date performance metrics, allowing me to track my progress more effectively.
    
