@@ -70,37 +70,16 @@ def transform(data, *args, **kwargs):
     data.columns = ['player_id', 'title_id', 'game', 'game_achievements', 
                     'game_gamerscore', 'game_max_gamerscore', 'game_achievements_progress',
                     'last_time_played', 'total_titles_played']
-    # # Rename columns
-    # data = data.rename(columns={'achievement.currentAchievements':'achievement_currentAchievements',
-    #                         'achievement.currentGamerscore': 'achievement_currentGamerscore',
-    #                         'achievement.sourceVersion': 'achievement_sourceVersion', 
-    #                         'achievement.totalGamerscore':'achievement_totalGamerscore',
-    #                         'achievement.progressPercentage':'achievement_progressPercentage',
-    #                         'titleHistory.lastTimePlayed':'titleHistory_lastTimePlayed'
-    #                         })
-   
-
-    # Convert multiple columns to int64
-    #print(data.dtypes)
-    data[['player_id', 'title_id']] = data[['player_id', 'title_id']].astype('int64')
-
-    #print(data['last_time_played'].iloc[1])
-    data['last_time_played'] = data['last_time_played'].astype('datetime64')
-    #print(data['last_time_played'].iloc[1])
-    #print(data.dtypes)
     
-
+    # Convert multiple columns to int64
+    data[['player_id', 'title_id']] = data[['player_id', 'title_id']].astype('int64')
+    data['last_time_played'] = data['last_time_played'].astype('datetime64')
+    
     # Convert last time played to correct format
     data[last_time_played] = pd.to_datetime(data[last_time_played]).dt.strftime(date_format)
     data[last_time_played] = data[last_time_played].apply(lambda x: convert_to_est(x))
     return data
 
-
-
-    data = data[data['titleId'] != 2043073184]
-    print(data.dtypes)
-
-    return data
 
 
 @test

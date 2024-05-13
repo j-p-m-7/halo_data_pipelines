@@ -21,29 +21,6 @@ def transform(data, *args, **kwargs):
     """
     # Specify your transformation logic here
     data = data.drop('hostId', axis=1)
-    
-    # print(len(data[data['RealName'].str.len() > 0]))
-    # print(len(data[data['RealNameOverride'].str.len() > 0]))
-
-    # real_names = data[['RealName','RealNameOverride']]
-    # real_names = real_names[real_names['RealNameOverride'].str.len() > 0]
-
-    # print(real_names)
-
-    # # Select specific columns
-    # columns_to_keep = ['xuid', 
-    #                    'titleId', 
-    #                    'name', 
-    #                    'achievement.currentAchievements', 
-    #                    'achievement.currentGamerscore', 
-    #                    'achievement.totalGamerscore',
-    #                    'achievement.progressPercentage',
-    #                    'titleHistory.lastTimePlayed',
-    #                    'total_titles_played']
-
-    # data = data[columns_to_keep]
-
-
 
     data.columns = ['player_id', 'is_sponsored_user', 'gamertag', 'gamerscore', 'account_tier', 
                     'years_with_xbox_gold','xbox_one_rep', 'location', 'bio', 'real_name', 
@@ -54,17 +31,14 @@ def transform(data, *args, **kwargs):
     columns_to_type_convert_to_int = ['player_id',
                                'gamerscore',
                                'years_with_xbox_gold']
-
     data[columns_to_type_convert_to_int] = data[columns_to_type_convert_to_int].astype('int64')
 
-
-
+    # Convert to boolean values
     data['is_quarantined'] = data['is_quarantined'].apply(lambda x: True if x == 0 else False)
 
-
+    # Conver to bool
     columns_to_type_convert_to_bool = ['is_quarantined','is_sponsored_user']
     data[columns_to_type_convert_to_bool] = data[columns_to_type_convert_to_bool].astype('bool')
-    #print(data.dtypes)
 
     return data
 
