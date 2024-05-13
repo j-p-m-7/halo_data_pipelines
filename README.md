@@ -92,7 +92,7 @@ Halo_Data_Pipelines/
 
 ## Problem Statement
 
-### Background:
+### <u>Background:</u>
 Halo players can rely on platforms like Halo Waypoint for tracking their in-game performance metrics and achievements. However, Halo Waypoint has several limitations, such as:
 
 1. **Lack of Granular Metrics**: The platform offers limited granularity in tracking player performance.
@@ -102,12 +102,13 @@ Halo players can rely on platforms like Halo Waypoint for tracking their in-game
 3. **Lack of Customization**: Players have limited control over the types of metrics tracked and the level of customization available in performance tracking platforms.
 
 4. **Limited Integration with Third-Party Tools**: Integrating Halo data with third-party analytics tools or visualization libraries may be challenging due to limitations in data accessibility and format.
----
-### Proposed Solution:
+
+### <u>Proposed Solution:</u>
+
+
 To overcome these challenges, I will build custom data pipelines to extract, transform, and load Halo data into a PostgreSQL database. This solution will enable capture of more granular metrics, real-time updates, and facilitate integration with third-party tools for advanced analytics and visualization.
 
----
-### Expected Outcomes:
+### <u>Expected Outcomes:</u>
 1. Enhanced Performance Tracking: I will have access to more detailed and up-to-date performance metrics, allowing me to track my progress more effectively.
    
 2. Improved Gaming Experience: By customizing performance tracking options and integrating with third-party tools, I can personalize my gaming experience and gain deeper insights into my gameplay.
