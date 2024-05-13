@@ -120,5 +120,8 @@ Depending on the success of this project, I may be able to expand the scope in t
 
 ## Inspired By:
 
+<div style="text-align: center;">
+
 [![Alt text for your video](https://img.youtube.com/vi/dbgK6cx--IY/0.jpg)](https://www.youtube.com/watch?v=dbgK6cx--IY)
 
+</div>
