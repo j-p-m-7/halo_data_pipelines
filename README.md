@@ -24,7 +24,6 @@ This purpose of this project is to capture my Halo Infinite player data and expo
 Halo_Data_Pipelines/
 │
 ├── halo-pipeline-project/
-│   ├── .gitignore
 │   ├── charts/
 │   ├── custom/
 │   ├── data_exporters/
@@ -40,13 +39,11 @@ Halo_Data_Pipelines/
 │   │   └── profiles.yml
 │   ├── extensions/
 │   ├── interactions/
-│   ├── io_config.yaml
 │   ├── pipelines/
 │   │   ├── example_pipeline/
 │   │   ├── load_friends_info/
 │   │   ├── load_my_info/
 │   │   └── load_player_data_test/
-│   ├── requirements.txt
 │   ├── transformers/
 │   │   ├── clean_data_test.py
 │   │   ├── combine_friends_and_friends_title_data_dev.py
@@ -57,7 +54,10 @@ Halo_Data_Pipelines/
 │   │   ├── transform_friends_title_data_dev.py
 │   │   ├── transform_my_data_dev.py
 │   │   └── transform_my_title_data_dev.py
-│   └── utils/
+│   ├── utils/
+│   ├── .gitignore
+│   ├── io_config.yaml
+│   └── requirements.txt
 ├── node_js_scripts/
 │   ├── halo_auth.js
 │   └── xbox_live_auth.js
