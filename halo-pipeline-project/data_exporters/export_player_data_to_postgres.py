@@ -19,7 +19,7 @@ def export_data_to_postgres(df: DataFrame, **kwargs) -> None:
     Docs: https://docs.mage.ai/design/data-loading#postgresql
     """
     schema_name = 'spartan'  # Specify the name of the schema to export data to
-    table_name = 'players'  # Specify the name of the table to export data to
+    table_name = 'friends'  # Specify the name of the table to export data to
     config_path = path.join(get_repo_path(), 'io_config.yaml')
     config_profile = 'dev'
 
