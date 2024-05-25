@@ -11,6 +11,18 @@ from datetime import datetime
 import xml.etree.ElementTree as ET
 from mage_ai.data_preparation.variable_manager import set_global_variable
 
+
+""" 
+Required installation:
+- npm install @xboxreplay/xboxlive-api
+- Set credentials in .env
+"""
+
+
+headers = {
+        "x-xbl-contract-version": "1"
+    }
+
 XSTS_TOKEN_URL = 'https://xsts.auth.xboxlive.com/xsts/authorize'
 
 XBOX_RELYING_PARTIES = ['http://xboxlive.com']
@@ -22,15 +34,7 @@ CLEARANCE_URL = "https://settings.svc.halowaypoint.com/oban/flight-configuration
 HALO_INFINITE_STATS_URL = "https://halostats.svc.halowaypoint.com/hi/"
 HALO_INFINITE_SKILL_URL = "https://skill.svc.halowaypoint.com/hi/"
 
-headers = {
-        "x-xbl-contract-version": "1"
-    }
 
-""" 
-Required installation:
-- npm install @xboxreplay/xboxlive-api
-- Set credentials in .env
-"""
 
 if 'data_loader' not in globals():
     from mage_ai.data_preparation.decorators import data_loader
@@ -129,6 +133,20 @@ def get_clearance_value(xuid, spartan_token):
         return clearance_value
 
 
+def get_spartan_and_clearance_tokens(xuid):
+        # Get user_token for generating a Halo XSTS Token
+        user_token = get_user_token()
+        
+        # Assigns Halo XSTS Token
+        xsts_token = get_halo_xsts_token(user_token)
+
+        # Assigns 343 Spartan Token
+        spartan_token = get_spartan_token(xsts_token)
+        clearance_value = get_clearance_value(xuid, spartan_token)
+        
+        return spartan_token, clearance_value
+
+
 def get_matches_played_count(xuid, spartan_token):
 
         headers = {"x-343-authorization-spartan": spartan_token,
@@ -142,19 +160,6 @@ def get_matches_played_count(xuid, spartan_token):
         return matches_played
 
 
-def get_match_history(xuid, spartan_token):
-
-        headers = {"x-343-authorization-spartan": spartan_token,
-            "Accept": "application/json"
-        }
-
-        # Match History
-        response = requests.get('https://halostats.svc.halowaypoint.com/hi/players/xuid({})/matches'.format(xuid), headers=headers)
-        print(response)
-
-        match_history = response.json()
-        return match_history
-
 
 
 @data_loader
@@ -164,77 +169,34 @@ def load_data_from_api(*args, **kwargs):
     """
 
     # Sets global variables to be used downstream
-    set_global_variable('get_my_matches', key='accept_language_header', value='en-US')
     set_global_variable('get_my_matches', key='accept_header', value='application/json')
-
-    # # Getting ddf of friends and list of friends ids
-    # friends_df = get_friends_profiles(authorization_header)
-
-
-    # Get user_token for generating a Halo XSTS Token
-    user_token = get_user_token()
+    set_global_variable('get_my_matches', key='accept_language_header', value='en-US')
     
-    # Assigns Halo XSTS Token
-    xsts_token = get_halo_xsts_token(user_token)
+    # Get xuid from kwargs
+    # If xuid is not provided, use my xuid
+    # May be used in the future if we want to get match history for a specific user
+    if 'xuid' not in kwargs:
+        xuid = 2533274816174040
+        set_global_variable('get_my_matches', key='xuid', value=xuid)
+    else:
+        xuid = kwargs.get('xuid')
 
-    # Assigns 343 Spartan Token
-    spartan_token = get_spartan_token(xsts_token)
+    # Test later to see if my xuid is needed or we can use anyones xuid
+    spartan_token, clearance_url = get_spartan_and_clearance_tokens(xuid)
 
-    # My unique XUID
-    xuid = 2533274848622227
-    clearance_value = get_clearance_value(xuid, spartan_token)
+    # Sets more global variables to be used downstream
+    set_global_variable('get_my_matches', key='spartan_token', value=spartan_token)
+    set_global_variable('get_my_matches', key='clearance_url', value=clearance_url)
 
-    matches = get_matches_played_count(xuid, spartan_token)
-    print("Numer of matches played:\n", matches)
+    # Get number of matches played
+    matches_count = get_matches_played_count(xuid, spartan_token)
+    print("Numer of matches played:\n", matches_count)
 
-    match_history = get_match_history(xuid, spartan_token)
-        
-    # Assuming 'match_history' variable contains the JSON data
-    results = match_history['Results']
+    set_global_variable('get_my_matches', key='matches_count', value=matches_count)
 
-    # Flatten the nested JSON structure
-    flattened_data = []
-    for result in results:
-        flattened_record = {
-            'MatchId': result['MatchId'],
-            'StartTime': result['MatchInfo']['StartTime'],
-            'EndTime': result['MatchInfo']['EndTime'],
-            'Duration': result['MatchInfo']['Duration'],
-            'LifecycleMode': result['MatchInfo']['LifecycleMode'],
-            'GameVariantCategory': result['MatchInfo']['GameVariantCategory'],
-            'LevelId': result['MatchInfo']['LevelId'],
-            'MapVariant_AssetKind': result['MatchInfo']['MapVariant']['AssetKind'],
-            'MapVariant_AssetId': result['MatchInfo']['MapVariant']['AssetId'],
-            'MapVariant_VersionId': result['MatchInfo']['MapVariant']['VersionId'],
-            'UgcGameVariant_AssetKind': result['MatchInfo']['UgcGameVariant']['AssetKind'],
-            'UgcGameVariant_AssetId': result['MatchInfo']['UgcGameVariant']['AssetId'],
-            'UgcGameVariant_VersionId': result['MatchInfo']['UgcGameVariant']['VersionId'],
-            'ClearanceId': result['MatchInfo']['ClearanceId'],
-            'Playlist_AssetKind': result['MatchInfo']['Playlist']['AssetKind'],
-            'Playlist_AssetId': result['MatchInfo']['Playlist']['AssetId'],
-            'Playlist_VersionId': result['MatchInfo']['Playlist']['VersionId'],
-            'PlaylistExperience': result['MatchInfo']['PlaylistExperience'],
-            'PlaylistMapModePair_AssetKind': result['MatchInfo']['PlaylistMapModePair']['AssetKind'],
-            'PlaylistMapModePair_AssetId': result['MatchInfo']['PlaylistMapModePair']['AssetId'],
-            'PlaylistMapModePair_VersionId': result['MatchInfo']['PlaylistMapModePair']['VersionId'],
-            'SeasonId': result['MatchInfo']['SeasonId'],
-            'PlayableDuration': result['MatchInfo']['PlayableDuration'],
-            'TeamsEnabled': result['MatchInfo']['TeamsEnabled'],
-            'TeamScoringEnabled': result['MatchInfo']['TeamScoringEnabled'],
-            'GameplayInteraction': result['MatchInfo']['GameplayInteraction'],
-            'LastTeamId': result['LastTeamId'],
-            'Outcome': result['Outcome'],
-            'Rank': result['Rank'],
-            'PresentAtEndOfMatch': result['PresentAtEndOfMatch']
-        }
-        flattened_data.append(flattened_record)
+    return 'Load count of matches...'
 
-    # Create DataFrame
-    df = pd.DataFrame(flattened_data)
 
-    # Display DataFrame
-    #import ace_tools as tools; tools.display_dataframe_to_user(name="Match Data", dataframe=df)
-    return df
     
 
 
