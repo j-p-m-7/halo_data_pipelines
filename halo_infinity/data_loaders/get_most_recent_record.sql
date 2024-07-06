@@ -1,0 +1,2 @@
+SELECT MAX(start_time) - INTERVAL '30 days'
+FROM SPARTAN.MY_MATCHES;
