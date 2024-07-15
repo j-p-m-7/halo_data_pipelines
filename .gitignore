@@ -200,3 +200,5 @@ sql_queries/
 updates/
 visualization/
 data/
+.png 
+.csv
