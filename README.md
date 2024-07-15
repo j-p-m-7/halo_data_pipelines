@@ -21,52 +21,80 @@ This purpose of this project is to capture my Halo Infinite player data and expo
 
 ## Project Structure:
 ```bash
-Halo_Data_Pipelines/
-│
-├── halo-pipeline-project/
-│   ├── charts/
-│   ├── custom/
-│   ├── data_exporters/
-│   │   ├── export_player_data_to_postgres.py
-│   │   └── export_titanic_clean.py
-│   ├── data_loaders/
-│   │   ├── load_friends_data_dev.py
-│   │   ├── load_friends_title_data_w_loader_dev.py
-│   │   ├── load_my_data_dev.py
-│   │   ├── load_my_title_data_w_loader_dev.py
-│   │   └── load_titanic.py
-│   ├── dbt/
-│   │   └── profiles.yml
-│   ├── extensions/
-│   ├── interactions/
-│   ├── pipelines/
-│   │   ├── example_pipeline/
-│   │   ├── load_friends_info/
-│   │   ├── load_my_info/
-│   │   └── load_player_data_test/
-│   ├── transformers/
-│   │   ├── clean_data_test.py
-│   │   ├── combine_friends_and_friends_title_data_dev.py
-│   │   ├── combine_my_data_and_title_data_dev.py
-│   │   ├── fill_in_missing_values.py
-│   │   ├── load_friends_title_data_dev.py
-│   │   ├── transform_friends_data_dev.py
-│   │   ├── transform_friends_title_data_dev.py
-│   │   ├── transform_my_data_dev.py
-│   │   └── transform_my_title_data_dev.py
-│   ├── utils/
-│   ├── .gitignore
-│   ├── io_config.yaml
-│   └── requirements.txt
-├── node_js_scripts/
-│   ├── halo_auth.js
-│   └── xbox_live_auth.js
+halo_project
+├── halo_infinity
+│   ├── custom
+│   │   ├── dev_clear_duckdb_tables.py
+│   │   ├── dev_loop_pipeline.py
+│   │   ├── dev_query_duckdb.py
+│   ├── data_exporters
+│   │   ├── dev_add_foreign_key.py
+│   │   ├── dev_export_cleaned_matches.py
+│   │   ├── dev_export_game_variants.py
+│   │   ├── dev_export_gamertags.py
+│   │   ├── dev_export_logs.py
+│   │   ├── dev_export_map_mode_pairs.py
+│   │   ├── dev_export_maps.py
+│   │   ├── dev_export_match_details.py
+│   │   ├── dev_export_matches.py
+│   │   ├── dev_export_playlists.py
+│   │   └── export_titanic_clean.py
+│   ├── data_loaders
+│   │   ├── check_table_key_constraint.sql
+│   │   ├── dev_get_auth.py
+│   │   ├── dev_get_endpoints.py
+│   │   ├── dev_get_gamertags.py
+│   │   ├── dev_get_map.py
+│   │   ├── dev_get_map_mode_pairs.py
+│   │   ├── dev_get_maps.py
+│   │   ├── dev_get_match_details.py
+│   │   ├── dev_get_matches.py
+│   │   ├── dev_get_most_recent_date.sql
+│   │   ├── dev_get_most_recent_date_v2.sql
+│   │   ├── dev_get_player_ids.sql
+│   │   ├── dev_get_playlist.py
+│   │   ├── dev_get_playlist_mapmodepair.py
+│   │   ├── dev_get_playlists.py
+│   │   ├── dev_get_ugcgamevariants.py
+│   │   ├── dev_load_matches_from_postgres.sql
+│   │   ├── dev_load_matches_from_postgres_v2.sql
+│   │   ├── dev_query_matches.sql
+│   │   ├── load_titanic.py
+│   │   ├── query_game_variants.sql
+│   │   ├── query_map_mode_pairs.sql
+│   │   ├── query_maps.sql
+│   │   └── query_playlists.sql
+│   ├── io_config.yaml
+│   ├── metadata.yaml
+│   ├── pipelines
+│   │   ├── dev_clean_matches
+│   │   ├── dev_get_game_variant
+│   │   ├── dev_get_gamertags
+│   │   ├── dev_get_map_mode_pair
+│   │   ├── dev_get_maps
+│   │   ├── dev_get_match_details
+│   │   ├── dev_get_matches
+│   │   ├── dev_get_playlists
+│   │   ├── dev_test_endpoints
+│   │   └── example_pipeline
+│   ├── requirements.txt
+│   ├── transformers
+│   │   ├── dev_check_gamertags.py
+│   │   ├── dev_clean_matches_col_names.py
+│   │   ├── dev_transform_match_details.py
+│   │   ├── dev_transform_matches.py
+│   │   └── fill_in_missing_values.py
+├── node_js_scripts
+│   ├── halo_auth.js
+│   ├── package-lock.json
+│   ├── package.json
+│   └── xbox_live_auth.js
 ├── .gitignore
-├── Dockerfile
-├── README.md
 ├── docker-compose.yml
+├── Dockerfile
 ├── halo_system_diagram.gif
-└── requirements.txt
+├── README.md
+├── requirements.txt
 ```
 
 

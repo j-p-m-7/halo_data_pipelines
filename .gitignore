@@ -198,3 +198,4 @@ tests_dlt_duckdb/
 cloud_auth/
 sql_queries/
 updates/
+visualization/
